@@ -16,14 +16,12 @@
     <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
       <h1 class="text-xl font-bold text-gray-800" data-i18n="siteTitle">Amaravati</h1>
 
-      <!-- Language Switch -->
-      <div class="flex gap-2">
-        <button onclick="setLang('en')" id="btn-en" class="lang-btn px-4 py-2 rounded-lg bg-blue-600 text-white">
-          English
-        </button>
-        <button onclick="setLang('te')" id="btn-te" class="lang-btn px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300">
-          తెలుగు
-        </button>
+      <!-- Language Switch Dropdown -->
+      <div>
+        <select id="lang-select" onchange="setLang(this.value)" class="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400">
+          <option value="en">English</option>
+          <option value="te">తెలుగు</option>
+        </select>
       </div>
     </div>
   </header>
@@ -118,14 +116,13 @@
         ? "అమరావతి - ఆంధ్రప్రదేశ్ రాజధాని"
         : "Amaravati - Capital of Andhra Pradesh";
 
-      // Update button styles
-      document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.remove('bg-blue-600', 'text-white');
-        btn.classList.add('bg-gray-200');
-      });
-      const activeBtn = document.getElementById('btn-' + lang);
-      activeBtn.classList.remove('bg-gray-200');
-      activeBtn.classList.add('bg-blue-600', 'text-white');
+      // Update dropdown selection
+      const langSelect = document.getElementById('lang-select');
+      if (langSelect) langSelect.value = lang;
+        // Set dropdown to current language on load
+        window.onload = () => {
+          setLang(currentLang);
+        };
     }
   </script>
 
