@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Amaravati - Capital of Andhra Pradesh</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    [data-i18n] { transition: opacity 0.2s ease; }
+  </style>
+</head>
+
+<body class="bg-gray-50 font-sans">
+
+  <!-- Header -->
+  <header class="bg-white shadow-md">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-xl font-bold text-gray-800" data-i18n="siteTitle">Amaravati</h1>
+
+      <!-- Language Switch -->
+      <div class="flex gap-2">
+        <button onclick="setLang('en')" id="btn-en" class="lang-btn px-4 py-2 rounded-lg bg-blue-600 text-white">
+          English
+        </button>
+        <button onclick="setLang('te')" id="btn-te" class="lang-btn px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300">
+          తెలుగు
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="max-w-6xl mx-auto px-6 py-12">
+    <h2 class="text-3xl font-bold text-gray-800 mb-4" data-i18n="heroTitle">
+      The Vision of Amaravati
+    </h2>
+    <p class="text-gray-600 text-lg leading-relaxed" data-i18n="heroDesc">
+      Amaravati, envisioned as the capital of Andhra Pradesh, represents a modern and sustainable urban development model.
+      Located on the banks of the Krishna River, the city is designed to blend rich cultural heritage with futuristic infrastructure.
+    </p>
+  </section>
+
+  <!-- Cards -->
+  <section class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-6 pb-12">
+
+    <div class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition">
+      <h3 class="text-xl font-semibold mb-2" data-i18n="card1Title">🏛️ Cultural Heritage</h3>
+      <p class="text-gray-600" data-i18n="card1Desc">
+        Amaravati has deep historical roots, known for its ancient Buddhist sites and rich traditions.
+      </p>
+    </div>
+
+    <div class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition">
+      <h3 class="text-xl font-semibold mb-2" data-i18n="card2Title">🌆 Smart City Vision</h3>
+      <p class="text-gray-600" data-i18n="card2Desc">
+        The city is planned with smart infrastructure, green spaces, and sustainable mobility.
+      </p>
+    </div>
+
+    <div class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition">
+      <h3 class="text-xl font-semibold mb-2" data-i18n="card3Title">🌱 Sustainable Growth</h3>
+      <p class="text-gray-600" data-i18n="card3Desc">
+        Focus on eco-friendly development with riverfront planning and green energy solutions.
+      </p>
+    </div>
+
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-white text-center py-4 text-gray-500" data-i18n="footer">
+    Designed with UX focus • Telugu &amp; English Language Toggle
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    const translations = {
+      en: {
+        siteTitle: "Amaravati",
+        heroTitle: "The Vision of Amaravati",
+        heroDesc: "Amaravati, envisioned as the capital of Andhra Pradesh, represents a modern and sustainable urban development model. Located on the banks of the Krishna River, the city is designed to blend rich cultural heritage with futuristic infrastructure.",
+        card1Title: "🏛️ Cultural Heritage",
+        card1Desc: "Amaravati has deep historical roots, known for its ancient Buddhist sites and rich traditions.",
+        card2Title: "🌆 Smart City Vision",
+        card2Desc: "The city is planned with smart infrastructure, green spaces, and sustainable mobility.",
+        card3Title: "🌱 Sustainable Growth",
+        card3Desc: "Focus on eco-friendly development with riverfront planning and green energy solutions.",
+        footer: "Designed with UX focus • Telugu & English Language Toggle"
+      },
+      te: {
+        siteTitle: "అమరావతి",
+        heroTitle: "అమరావతి దార్శనికత",
+        heroDesc: "ఆంధ్రప్రదేశ్ రాజధానిగా ఊహించబడిన అమరావతి, ఆధునిక మరియు సుస్థిర పట్టణ అభివృద్ధి నమూనాను సూచిస్తుంది. కృష్ణా నది ఒడ్డున ఉన్న ఈ నగరం, గొప్ప సాంస్కృతిక వారసత్వాన్ని భవిష్యత్ మౌలిక సదుపాయాలతో మిళితం చేసేలా రూపొందించబడింది.",
+        card1Title: "🏛️ సాంస్కృతిక వారసత్వం",
+        card1Desc: "అమరావతికి లోతైన చారిత్రక మూలాలు ఉన్నాయి, ఇది ప్రాచీన బౌద్ధ క్షేత్రాలు మరియు గొప్ప సంప్రదాయాలకు ప్రసిద్ధి.",
+        card2Title: "🌆 స్మార్ట్ సిటీ దార్శనికత",
+        card2Desc: "స్మార్ట్ మౌలిక సదుపాయాలు, పచ్చని ప్రదేశాలు మరియు సుస్థిర రవాణాతో నగరం ప్రణాళిక చేయబడింది.",
+        card3Title: "🌱 సుస్థిర అభివృద్ధి",
+        card3Desc: "నదీతీర ప్రణాళిక మరియు హరిత ఇంధన పరిష్కారాలతో పర్యావరణ అనుకూల అభివృద్ధిపై దృష్టి.",
+        footer: "UX దృష్టితో రూపొందించబడింది • తెలుగు & ఆంగ్ల భాషా టోగుల్"
+      }
+    };
+
+    let currentLang = 'en';
+
+    function setLang(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+
+      // Update all translatable elements
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+
+      // Update page title
+      document.title = lang === 'te'
+        ? "అమరావతి - ఆంధ్రప్రదేశ్ రాజధాని"
+        : "Amaravati - Capital of Andhra Pradesh";
+
+      // Update button styles
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('bg-blue-600', 'text-white');
+        btn.classList.add('bg-gray-200');
+      });
+      const activeBtn = document.getElementById('btn-' + lang);
+      activeBtn.classList.remove('bg-gray-200');
+      activeBtn.classList.add('bg-blue-600', 'text-white');
+    }
+  </script>
+
+</body>
+</html>
