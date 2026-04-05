@@ -4,17 +4,33 @@
   <meta charset="UTF-8">
   <title>Amaravati - Capital of Andhra Pradesh</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Mandali&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Telugu Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Mandali&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Suranna&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Gidugu&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     [data-i18n] { transition: opacity 0.2s ease; }
 
+
     .mandali-regular {
-  font-family: "Mandali", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
+      font-family: "Mandali", sans-serif;
+    }
+    .noto-sans-telugu {
+      font-family: 'Noto Sans Telugu', sans-serif;
+    }
+    .baloo-tammudu {
+      font-family: 'Baloo Tammudu 2', cursive;
+    }
+    .suranna {
+      font-family: 'Suranna', serif;
+    }
+    .gidugu {
+      font-family: 'Gidugu', serif;
+    }
 
   </style>
 </head>
@@ -27,10 +43,17 @@
       <h1 class="text-xl font-bold text-gray-800" data-i18n="siteTitle">Amaravati</h1>
 
       <!-- Language Switch Dropdown -->
-      <div>
+      <div class="flex gap-2 items-center">
         <select id="lang-select" onchange="setLang(this.value)" class="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400">
           <option value="en">English</option>
           <option value="te">తెలుగు</option>
+        </select>
+        <select id="font-select" onchange="setTeluguFont(this.value)" class="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 hidden">
+          <option value="mandali-regular">Mandali</option>
+          <option value="noto-sans-telugu">Noto Sans Telugu</option>
+          <option value="baloo-tammudu">Baloo Tammudu 2</option>
+          <option value="suranna">Suranna</option>
+          <option value="gidugu">Gidugu</option>
         </select>
       </div>
     </div>
@@ -108,6 +131,7 @@
     };
 
     let currentLang = 'en';
+    let currentTeluguFont = 'mandali-regular';
 
     function setLang(lang) {
       currentLang = lang;
@@ -130,18 +154,40 @@
       const langSelect = document.getElementById('lang-select');
       if (langSelect) langSelect.value = lang;
 
-      // Apply custom Telugu font
-      const body = document.body;
-      if (lang === 'te') {
-        body.classList.add('mandali-regular');
-      } else {
-        body.classList.remove('mandali-regular');
+      // Show/hide Telugu font selector
+      const fontSelect = document.getElementById('font-select');
+      if (fontSelect) {
+        if (lang === 'te') {
+          fontSelect.classList.remove('hidden');
+          setTeluguFont(fontSelect.value || currentTeluguFont);
+        } else {
+          fontSelect.classList.add('hidden');
+          removeTeluguFonts();
+        }
       }
     }
 
-    // Set dropdown to current language on load
+    function setTeluguFont(fontClass) {
+      currentTeluguFont = fontClass;
+      const body = document.body;
+      // Remove all Telugu font classes
+      removeTeluguFonts();
+      // Add the selected font class
+      if (currentLang === 'te') {
+        body.classList.add(fontClass);
+      }
+    }
+
+    function removeTeluguFonts() {
+      const body = document.body;
+      body.classList.remove('mandali-regular', 'noto-sans-telugu', 'baloo-tammudu', 'suranna', 'gidugu');
+    }
+
+    // Set dropdowns to current language and font on load
     window.onload = () => {
       setLang(currentLang);
+      const fontSelect = document.getElementById('font-select');
+      if (fontSelect) fontSelect.value = currentTeluguFont;
     };
   </script>
 
