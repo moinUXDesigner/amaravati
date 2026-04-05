@@ -129,11 +129,20 @@
       // Update dropdown selection
       const langSelect = document.getElementById('lang-select');
       if (langSelect) langSelect.value = lang;
-        // Set dropdown to current language on load
-        window.onload = () => {
-          setLang(currentLang);
-        };
+
+      // Apply custom Telugu font
+      const body = document.body;
+      if (lang === 'te') {
+        body.classList.add('mandali-regular');
+      } else {
+        body.classList.remove('mandali-regular');
+      }
     }
+
+    // Set dropdown to current language on load
+    window.onload = () => {
+      setLang(currentLang);
+    };
   </script>
 
 </body>
