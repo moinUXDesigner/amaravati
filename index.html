@@ -5,42 +5,50 @@
   <title>Amaravati - Capital of Andhra Pradesh</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Telugu Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Mandali&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Suranna&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Gidugu&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anek+Telugu:wght@100..800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    [data-i18n] { transition: opacity 0.2s ease; }
-    .goog-te-banner-frame.skiptranslate { display: none !important; }
-    body { top: 0px !important; }
+    /* Hide Google Translate bar */
+    .goog-te-banner-frame, .goog-te-banner-frame.skiptranslate,
+    #goog-gt-tt, .goog-te-balloon-frame, .goog-te-menu-frame,
+    body > .skiptranslate {
+      display: none !important;
+      height: 0 !important;
+      visibility: hidden !important;
+    }
+    html, body {
+      margin-top: 0 !important;
+      padding-top: 0 !important;
+      top: 0 !important;
+    }
     .goog-logo-link, .goog-te-gadget span { display: none !important; }
     .goog-te-gadget { font-size: 0px; }
-  </style>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    [data-i18n] { transition: opacity 0.2s ease; }
 
-
-    .mandali-regular {
-      font-family: "Mandali", sans-serif;
+    /* Telugu font classes — !important overrides Google Translate inline styles */
+    body.mandali-regular, body.mandali-regular * {
+      font-family: "Mandali", sans-serif !important;
     }
-    .noto-sans-telugu {
-      font-family: 'Noto Sans Telugu', sans-serif;
+    body.noto-sans-telugu, body.noto-sans-telugu * {
+      font-family: "Noto Sans Telugu", sans-serif !important;
     }
-    .baloo-tammudu {
-      font-family: 'Baloo Tammudu 2', cursive;
+    body.baloo-tammudu, body.baloo-tammudu * {
+      font-family: "Baloo Tammudu 2", cursive !important;
     }
-    .suranna {
-      font-family: 'Suranna', serif;
+    body.suranna, body.suranna * {
+      font-family: "Suranna", serif !important;
     }
-    .gidugu {
-      font-family: 'Gidugu', serif;
+    body.gidugu, body.gidugu * {
+      font-family: "Gidugu", serif !important;
     }
-    .anek-telugu-500 {
-  font-family: "Anek Telugu", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 500;
-  font-style: normal;
-  font-variation-settings:
-    "wdth" 100;
-}
+    body.anek-telugu-500, body.anek-telugu-500 * {
+      font-family: "Anek Telugu", sans-serif !important;
+    }
   </style>
 </head>
 
@@ -53,9 +61,17 @@
 
       <!-- Language Switch Dropdown -->
       <div class="flex gap-2 items-center">
-        <select id="lang-select" onchange="translateLanguage(this.value)" class="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <select id="lang-select" onchange="onLangChange(this.value)" class="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400">
           <option value="en">English</option>
           <option value="te">తెలుగు</option>
+        </select>
+        <select id="font-select" onchange="setTeluguFont(this.value)" class="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 ml-2 hidden">
+          <option value="mandali-regular">Mandali</option>
+          <option value="noto-sans-telugu">Noto Sans Telugu</option>
+          <option value="baloo-tammudu">Baloo Tammudu 2</option>
+          <option value="suranna">Suranna</option>
+          <option value="gidugu">Gidugu</option>
+          <option value="anek-telugu-500">Anek Telugu</option>
         </select>
       </div>
     </div>
@@ -103,9 +119,19 @@
     Designed with UX focus • Telugu &amp; English Language Toggle
   </footer>
 
-  <!-- Google Translate Widget & Language Switch -->
+  <!-- Google Translate Widget -->
   <div id="google_translate_element" class="hidden"></div>
+
   <script type="text/javascript">
+    var fontClasses = ['mandali-regular', 'noto-sans-telugu', 'baloo-tammudu', 'suranna', 'gidugu', 'anek-telugu-500'];
+    var currentFont = '';
+
+    // Clear Google Translate cookie so page always loads in English
+    function clearGoogleTranslateCookie() {
+      document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.' + location.hostname;
+    }
+
     function googleTranslateElementInit() {
       new google.translate.TranslateElement({
         pageLanguage: 'en',
@@ -123,17 +149,44 @@
           select.dispatchEvent(new Event('change'));
           clearInterval(interval);
         }
-        if (++tries > 20) clearInterval(interval);
+        if (++tries > 30) clearInterval(interval);
       }, 200);
     }
 
+    function onLangChange(lang) {
+      var fontSelect = document.getElementById('font-select');
+      if (lang === 'te') {
+        fontSelect.classList.remove('hidden');
+        translateLanguage('te');
+      } else {
+        fontSelect.classList.add('hidden');
+        removeTeluguFonts();
+        translateLanguage('en');
+      }
+    }
+
+    function setTeluguFont(fontClass) {
+      if (!fontClass) return;
+      currentFont = fontClass;
+      removeTeluguFonts();
+      document.body.classList.add(fontClass);
+    }
+
+    function removeTeluguFonts() {
+      currentFont = '';
+      fontClasses.forEach(function(fc) {
+        document.body.classList.remove(fc);
+      });
+    }
+
+    // Clear cookie on load so page defaults to English
+    clearGoogleTranslateCookie();
+
     window.onload = function() {
-      // Load Google Translate
+      // Load Google Translate script
       var gt = document.createElement('script');
       gt.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
       document.body.appendChild(gt);
-      // Default to English
-      translateLanguage('en');
     };
   </script>
 
