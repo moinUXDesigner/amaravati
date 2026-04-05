@@ -159,7 +159,8 @@
       if (fontSelect) {
         if (lang === 'te') {
           fontSelect.classList.remove('hidden');
-          setTeluguFont(fontSelect.value || currentTeluguFont);
+          // Always apply the currently selected font
+          setTeluguFont(fontSelect.value);
         } else {
           fontSelect.classList.add('hidden');
           removeTeluguFonts();
@@ -172,8 +173,8 @@
       const body = document.body;
       // Remove all Telugu font classes
       removeTeluguFonts();
-      // Add the selected font class
-      if (currentLang === 'te') {
+      // Add the selected font class if Telugu is active
+      if (document.getElementById('lang-select').value === 'te') {
         body.classList.add(fontClass);
       }
     }
