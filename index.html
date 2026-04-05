@@ -170,18 +170,22 @@
 
     function setTeluguFont(fontClass) {
       currentTeluguFont = fontClass;
-      const body = document.body;
-      // Remove all Telugu font classes
+      // Remove all Telugu font classes from body and all data-i18n elements
       removeTeluguFonts();
-      // Add the selected font class if Telugu is active
       if (document.getElementById('lang-select').value === 'te') {
-        body.classList.add(fontClass);
+        document.body.classList.add(fontClass);
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          el.classList.add(fontClass);
+        });
       }
     }
 
     function removeTeluguFonts() {
-      const body = document.body;
-      body.classList.remove('mandali-regular', 'noto-sans-telugu', 'baloo-tammudu', 'suranna', 'gidugu');
+      const fontClasses = ['mandali-regular', 'noto-sans-telugu', 'baloo-tammudu', 'suranna', 'gidugu'];
+      document.body.classList.remove(...fontClasses);
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        el.classList.remove(...fontClasses);
+      });
     }
 
     // Set dropdowns to current language and font on load
