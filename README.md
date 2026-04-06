@@ -5,7 +5,7 @@ A lightweight, single-page bilingual website template with **Google Translate** 
 ## Live Demo
 
 Open `index.html` in any browser or deploy to GitHub Pages.
-https://moinuxdesigner.github.io/amaravati/
+https://moinuxdesigner.github.io/telugu-translate
 
 ## Features
 
